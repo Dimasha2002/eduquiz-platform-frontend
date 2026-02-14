@@ -45,9 +45,22 @@ export const AuthProvider = ({ children }) => {
       setUser(user);
       return { success: true, user };
     } catch (error) {
+      console.error('Login error:', error);
+      console.error('Error response:', error.response);
+      
+      let errorMessage = 'Login failed';
+      
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.message) {
+        errorMessage = `Network error: ${error.message}`;
+      } else if (!error.response) {
+        errorMessage = 'Cannot connect to server. Please check if the backend is running.';
+      }
+      
       return { 
         success: false, 
-        message: error.response?.data?.message || 'Login failed' 
+        message: errorMessage
       };
     }
   };
@@ -61,9 +74,22 @@ export const AuthProvider = ({ children }) => {
       setUser(user);
       return { success: true, user, message: response.data.message };
     } catch (error) {
+      console.error('Registration error:', error);
+      console.error('Error response:', error.response);
+      
+      let errorMessage = 'Registration failed';
+      
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.message) {
+        errorMessage = `Network error: ${error.message}`;
+      } else if (!error.response) {
+        errorMessage = 'Cannot connect to server. Please check if the backend is running.';
+      }
+      
       return { 
         success: false, 
-        message: error.response?.data?.message || 'Registration failed' 
+        message: errorMessage
       };
     }
   };
