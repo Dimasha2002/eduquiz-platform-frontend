@@ -258,7 +258,7 @@ const TakeQuiz = () => {
             <button
               onClick={() => {
                 const moduleId = typeof quiz.module === 'object' ? quiz.module._id : quiz.module;
-                window.location.href = `/student/module/${moduleId}`;
+                navigate(`/student/module/${moduleId}`, { state: { refresh: true } });
               }}
               className="btn-primary"
             >
